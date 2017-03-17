@@ -1,5 +1,17 @@
 from subprocess import call
 from time import strftime
+from cStringIO import StringIO
+import sys
+
+class Capturing(list):
+    def __enter__(self):
+        self._stdout = sys.stdout
+        sys.stdout = self._stringio = StringIO()
+        return self
+    def __exit__(self, *args):
+        self.extend(self._stringio.getvalue().splitlines())
+        del self._stringio    # free up some memory
+        sys.stdout = self._stdout
 
 class Knitr(object):
 
@@ -34,7 +46,7 @@ class Knitr(object):
         if title!="":
             self.content += "#"*level + title + "\n"
             self.titles.append(title)
-        self.content += body+"\n"
+        self.content += body+"\n\n"
 
     def analysis(self, script, title="", description="", language="R", data=[],
                  display=True, echo=False, level=2):
@@ -133,3 +145,23 @@ class Knitr(object):
         self.content += "}\n"
         self.content += script+"\n"
         self.content += "```\n\n"
+
+    def inject(self, code, _globals=None, title="", description="", level=2,
+               echo=False):
+        if _globals==None:
+            raise "Globals() is missing. Cannot execute code without access to the global namespace. Please run as: object.inject(code, globals())"
+
+        if title!="":
+            self.content += "#"*level + title + "\n"
+            self.titles.append(title)
+        if description!="":
+            self.content += description + "\n"
+
+        with Capturing() as outputs:
+            exec(code, _globals, globals())
+        results = ""
+        for output in outputs:
+            results += "cat('%s')\n" % output
+        if echo==True:
+            self.makecodeblock(code, "python", echo=True, eval=False)
+        self.makecodeblock(results, "R")

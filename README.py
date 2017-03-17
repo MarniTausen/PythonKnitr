@@ -65,4 +65,22 @@ abline(reg[1], reg[2])
 ''', description = "Plot of the linear regression between variables x and y.")
 document.text('\n___\n')
 
+document.text(".figure() has the same parameters as .analysis(), but also includes variables for modifying the size of the image, width and height, which are self explanatory.")
+
+document.text("There is another type of function, where you can 'inject' a python script from the environment you are working into the document. So you can write a python code, and whatever result you want to display you can inject. Example", title="Inject")
+
+document.makecodeblock("""a = 65
+b = 15
+
+document.inject("print a+b", globals(), echo=True)
+""", "python", echo=True, eval=False)
+
+document.text("This would produce the following result:\n\n___")
+a = 65
+b = 15
+
+document.inject("print a+b", globals(), echo=True)
+document.text('\n___\n')
+
+
 document.compile("README.Rmd", output_type="github")

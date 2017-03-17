@@ -1,13 +1,14 @@
 Python-Knitr Guide
 ================
 Marni Tausen
-16/03/2017 - 15:23:17
+17/03/2017 - 14:45:16
 
 -   [Installation](#installation)
 -   [Introduction](#introduction)
 -   [Functions](#functions)
 -   [Example](#example)
 -   [Linear regression](#linear-regression)
+-   [Inject](#inject)
 
 Installation
 ------------
@@ -21,7 +22,9 @@ For it to work, it assumes you have R installed. The R package Knitr is also a r
 Introduction
 ------------
 
-Python-Knitr is a wrapper that produces an R markdown document, by loading R scripts or python scripts, and sets up the document for you and compiles it. The basic syntax of how to load the package is as follows, and then you initialize a document by creating a Knitr object.
+Python-Knitr is a wrapper that produces an R markdown document, by loading R scripts or python scripts, and sets up the document for you and compiles it.
+
+The basic syntax of how to load the package is as follows, and then you initialize a document by creating a Knitr object.
 
 ``` python
 from PythonKnitr import Knitr
@@ -117,5 +120,31 @@ This would produce the following result:
 ------------------------------------------------------------------------
 
 Plot of the linear regression between variables x and y. ![](README_files/figure-markdown_github/unnamed-chunk-8-1.png)
+
+------------------------------------------------------------------------
+
+.figure() has the same parameters as .analysis(), but also includes variables for modifying the size of the image, width and height, which are self explanatory.
+
+Inject
+------
+
+There is another type of function, where you can 'inject' a python script from the environment you are working into the document. So you can write a python code, and whatever result you want to display you can inject. Example
+
+``` python
+a = 65
+b = 15
+
+document.inject("print a+b", globals(), echo=True)
+```
+
+This would produce the following result:
+
+------------------------------------------------------------------------
+
+``` python
+print a+b
+```
+
+    80
 
 ------------------------------------------------------------------------
