@@ -15,7 +15,7 @@ class Capturing(list):
 
 class Knitr(object):
 
-    def __init__(self, title="", author="", datascript=""):
+    def __init__(self, title="", author=""):
         self.content = ""
         if title!="":
             self.content += "---\n"
@@ -25,13 +25,12 @@ class Knitr(object):
             self.content += "---\n\n"
         self.titles = []
 
-    def set_options(self, echo=True, comment="##", warning=True, error=True,
+    def set_options(self, comment="##", warning=True, error=True,
                     message=True, highlight=True, background="#FFFFFF", size="normalsize",
                     seed=False, seed_num=100):
         self.content += "```{r, echo=FALSE}\n"
         self.content += "knitr::opts_chunk$set(out.format='html'"
         self.content += ", comment='%s'" % comment
-        self.content += ", echo=%s" % self.bool(echo)
         self.content += ", warning=%s" % self.bool(warning)
         self.content += ", error=%s" % self.bool(error)
         self.content += ", message=%s" % self.bool(message)
