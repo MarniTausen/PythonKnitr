@@ -1,7 +1,7 @@
 Python-Knitr Guide
 ================
 Marni Tausen
-20/03/2017 - 11:33:00
+21/03/2017 - 14:09:42
 
 -   [Installation](#installation)
 -   [Introduction](#introduction)
@@ -39,6 +39,8 @@ from PythonKnitr import Knitr
 
 document = Knitr()
 ```
+
+The Knitr() class, can take in 2 parameters title and author. If these two parameters are included it will make a title text at the top.
 
 Functions
 ---------

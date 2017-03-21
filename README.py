@@ -25,6 +25,8 @@ document.makecodeblock("""from PythonKnitr import Knitr
 
 document = Knitr()
 """, "python", echo=True, eval=False)
+document.text("The Knitr() class, can take in 2 parameters title and author. If these two parameters are included it will make a title text at the top.")
+
 
 document.text("The Knitr object has a set of built-in functions which allows you to add text or scripts to the markdown document in different ways. The most simple function is the .text() function, which simply adds text into the document. An example usage shown below:", title="Functions")
 document.makecodeblock("document.text('This is an example', title='Example', level=3)", "python",
